@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saints Art Puzzle · A new mystery saint every day</title>
+  <meta name="description" content="Solve the art puzzle to reveal today's saint, then read their story and a prayer. Free, no sign-up, works on phones and computers.">
+  <meta name="theme-color" content="#FFF9F0">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Saints Art Puzzle">
+  <meta property="og:description" content="Solve the art puzzle to reveal today's saint, then read their story and a prayer.">
+  <meta property="og:image" content="assets/img/video-thumb.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800&family=Raleway:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+<!-- Icon sprite. Paths copied from the design export. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M8 2.5h8a1.5 1.5 0 0 1 1.5 1.5v16a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 20V4A1.5 1.5 0 0 1 8 2.5zM11 18h2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 5h16v15H4zM4 10h16M9 3v4M15 3v4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5z"/></symbol>
+  <symbol id="i-play-cta" viewBox="0 0 24 24"><path d="M7 4.5l13 7.5-13 7.5z" fill="#FFFFFF" stroke="#5A3412" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5l11 6.5-11 6.5z" fill="#FFF7EE" stroke="none"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 3v18M6 8h12"/></symbol>
+  <symbol id="i-reload" viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6M5 15a7 7 0 0 0 12 3M19 9A7 7 0 0 0 7 6"/></symbol>
+  <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6"/></symbol>
+  <symbol id="i-sound-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16.5 9.5l5 5M21.5 9.5l-5 5"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></symbol>
+  <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 11V5a2 2 0 0 1 4 0v6M13 10V4a2 2 0 0 1 4 0v7M9 11a2 2 0 0 0-4 0v3a7 7 0 0 0 14 0v-3"/></symbol>
+  <symbol id="i-hint" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+</svg>
+
+<a class="skip-link" href="#play">Skip to the puzzle</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__logo" href="./" aria-label="Saints Art Puzzle home">
+      <img src="assets/img/logo.svg" alt="Saints Art Puzzle" width="145" height="48">
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <svg class="icon" width="28" height="28"><use href="#i-menu"/></svg>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a class="site-nav__link is-current" href="#play">Play</a>
+      <a class="site-nav__link" href="#how-to-play">How to play</a>
+      <a class="site-nav__link" href="#faq">FAQ</a>
+      <a class="btn btn--primary btn--sm" href="#get-the-app">
+        <svg class="icon" width="18" height="18"><use href="#i-phone"/></svg>
+        Get the app
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO / GAME ============ -->
+  <div class="hero" id="play">
+    <div class="ad ad--hero-top" data-ad-slot="hero-top" aria-hidden="true">ADVERTISEMENT</div>
+
+    <div class="hero__intro">
+      <p class="eyebrow">PLAY FREE · NEW MYSTERY SAINT EVERY DAY</p>
+      <h1 class="hero__title">Saints Art Puzzle</h1>
+      <p class="hero__lede">Solve the art puzzle to reveal today's saint, then read their story and a prayer. Free, no sign-up, works on phones and computers.</p>
+    </div>
+
+    <div class="game">
+      <!--
+        GAME EMBED: set data-game-src to the game's URL.
+        The iframe is only created when the player presses "Solve the puzzle".
+      -->
+      <div class="game__frame" id="game-frame" data-game-src="">
+        <div class="launcher" id="launcher">
+          <div class="launcher__glow" aria-hidden="true"></div>
+          <div class="launcher__body">
+            <div class="launcher__art">
+              <div class="launcher__art-inner">
+                <img src="assets/img/mystery-saint.jpg" alt="Hidden saint" width="230" height="308">
+                <span class="launcher__q" aria-hidden="true">?</span>
+              </div>
+            </div>
+
+            <div class="launcher__info">
+              <p class="launcher__eyebrow">TODAY'S MYSTERY SAINT · <span data-date="long-upper">NOVEMBER 1</span></p>
+              <h2 class="launcher__title">Who is it?</h2>
+              <p class="launcher__desc launcher__desc--desktop">Solve the art puzzle to reveal today's saint.</p>
+              <p class="launcher__desc launcher__desc--mobile">Today's mystery saint · <span data-date="short">Nov 1</span></p>
+
+              <div class="launcher__rows">
+                <div class="launcher__row">
+                  <span class="launcher__row-icon"><svg class="icon icon--b24" width="19" height="19"><use href="#i-calendar"/></svg></span>
+                  <span>Feast day: <span data-date="long">November 1</span></span>
+                </div>
+                <div class="launcher__row launcher__row--locked">
+                  <span class="launcher__row-icon"><svg class="icon icon--b24" width="18" height="18"><use href="#i-lock"/></svg></span>
+                  Unlocks as you play
+                </div>
+              </div>
+
+              <button class="btn btn--primary btn--cta" type="button" data-action="start">
+                <span class="btn__shine" aria-hidden="true"></span>
+                <svg class="icon" width="30" height="30"><use href="#i-play-cta"/></svg>
+                Solve the puzzle
+              </button>
+
+              <div class="launcher__brand">
+                <span class="launcher__brand-name">
+                  <span class="launcher__brand-mark"><svg class="icon icon--b26" width="16" height="16"><use href="#i-cross"/></svg></span>
+                  Saints Art Puzzle
+                </span>
+                <span class="launcher__brand-meta">2–3 min · free</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="game__exit" type="button" data-action="exit-fullscreen" aria-label="Exit fullscreen">
+          <svg class="icon icon--b24" width="22" height="22"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <div class="game__tools">
+        <button class="tool tool--desktop" type="button" data-action="reload">
+          <svg class="icon" width="18" height="18"><use href="#i-reload"/></svg>Reload
+        </button>
+        <button class="tool" type="button" data-action="fullscreen">
+          <svg class="icon" width="18" height="18"><use href="#i-fullscreen"/></svg>Fullscreen
+        </button>
+        <button class="tool tool--desktop" type="button" data-action="sound" aria-pressed="true">
+          <svg class="icon" width="18" height="18"><use href="#i-sound"/></svg>Sound
+        </button>
+        <button class="tool" type="button" data-action="share">
+          <svg class="icon" width="18" height="18"><use href="#i-share"/></svg>Share
+        </button>
+      </div>
+    </div>
+
+    <div class="ad ad--hero-bottom" data-ad-slot="hero-bottom" aria-hidden="true">ADVERTISEMENT</div>
+  </div>
+
+  <!-- ============ HOW TO PLAY ============ -->
+  <section class="section" id="how-to-play" aria-labelledby="how-title">
+    <div class="container stack-22">
+      <div class="section__head">
+        <p class="eyebrow">HOW TO PLAY</p>
+        <h2 class="h2 h2--lg" id="how-title">Three steps, about three minutes</h2>
+      </div>
+
+      <ol class="steps">
+        <li class="card step">
+          <div class="step__media">
+            <img class="step__piece" src="assets/img/puzzle-piece.png" alt="" width="128" height="130">
+            <span class="step__num">01</span>
+          </div>
+          <div class="step__body">
+            <h3 class="step__title">Pick a piece</h3>
+            <p class="body-text">Each piece is a part of the painting: a figure, a cloud, a golden gate.</p>
+          </div>
+        </li>
+        <li class="card step">
+          <div class="step__media">
+            <div class="step__board">
+              <img src="assets/img/puzzle-board.jpg" alt="" width="190" height="254">
+              <span class="step__hint" aria-hidden="true"></span>
+            </div>
+            <span class="step__num">02</span>
+          </div>
+          <div class="step__body">
+            <h3 class="step__title">Drop it in place</h3>
+            <p class="body-text">Drag it onto the line drawing. A gold glow shows where it fits when you use a hint.</p>
+          </div>
+        </li>
+        <li class="card step">
+          <div class="step__media">
+            <div class="step__reveal">
+              <img src="assets/img/revealed-saint.jpg" alt="" width="84" height="112">
+            </div>
+            <span class="step__num">03</span>
+          </div>
+          <div class="step__body">
+            <h3 class="step__title">Reveal the saint</h3>
+            <p class="body-text">Place the last piece to reveal who it is, then read their story and a prayer.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CONTROLS ============ -->
+  <section class="section section--band" aria-labelledby="controls-title">
+    <div class="container stack-18">
+      <p class="eyebrow">CONTROLS</p>
+      <h2 class="h2" id="controls-title">Easy for every hand</h2>
+
+      <ul class="controls">
+        <li class="card control">
+          <span class="control__icon"><svg class="icon icon--b24" width="24" height="24"><use href="#i-drag"/></svg></span>
+          <div>
+            <h3 class="control__title">Drag</h3>
+            <p class="body-text body-text--sm">Mouse or finger: hold a piece and move it</p>
+          </div>
+        </li>
+        <li class="card control">
+          <span class="control__icon"><svg class="icon icon--b24" width="24" height="24"><use href="#i-hint"/></svg></span>
+          <div>
+            <h3 class="control__title">Hint</h3>
+            <p class="body-text body-text--sm">Shows where the next piece goes</p>
+          </div>
+        </li>
+        <li class="card control">
+          <span class="control__icon"><svg class="icon icon--b24" width="24" height="24"><use href="#i-fullscreen"/></svg></span>
+          <div>
+            <h3 class="control__title">Fullscreen</h3>
+            <p class="body-text body-text--sm">Bigger board, easier on the eyes</p>
+          </div>
+        </li>
+        <li class="card control">
+          <span class="control__icon"><svg class="icon icon--b24" width="24" height="24"><use href="#i-sound"/></svg></span>
+          <div>
+            <h3 class="control__title">Sound</h3>
+            <p class="body-text body-text--sm">Gentle music, on or off</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ WATCH ============ -->
+  <section class="section" aria-labelledby="watch-title">
+    <div class="container watch">
+      <div class="watch__text">
+        <p class="eyebrow">WATCH</p>
+        <h2 class="h2" id="watch-title">See a saint come to life</h2>
+        <p class="body-text body-text--lg">A one-minute look at a puzzle from first piece to the reveal.</p>
+      </div>
+
+      <!-- VIDEO: set data-youtube-id to the YouTube video ID. -->
+      <div class="video" data-youtube-id="">
+        <button class="video__poster" type="button" data-action="play-video" aria-label="Play video: how to play Saints Art Puzzle">
+          <img src="assets/img/video-thumb.jpg" alt="" width="560" height="315" loading="lazy">
+          <span class="video__shade" aria-hidden="true"></span>
+          <span class="video__play" aria-hidden="true"><svg class="icon" width="34" height="34"><use href="#i-play"/></svg></span>
+          <span class="video__badge">YouTube · 1:24</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ad-wrap">
+    <div class="ad ad--mid" data-ad-slot="mid" aria-hidden="true">ADVERTISEMENT</div>
+  </div>
+
+  <!-- ============ GET THE APP ============ -->
+  <section class="section" id="get-the-app" aria-labelledby="app-title">
+    <div class="container">
+      <div class="app-card">
+        <div class="app-card__text">
+          <p class="eyebrow">GET THE APP</p>
+          <h2 class="h2" id="app-title">Play more in the app</h2>
+          <p class="body-text body-text--lg">The website has one mystery saint a day. The app has the full collection, the daily league and friends leagues.</p>
+          <div class="stores">
+            <a class="store" href="#">
+              <svg class="icon" width="24" height="24"><use href="#i-phone"/></svg>
+              <span class="store__label"><span class="store__small">Download on the</span><span class="store__big">App Store</span></span>
+            </a>
+            <a class="store" href="#">
+              <svg class="icon" width="24" height="24"><use href="#i-phone"/></svg>
+              <span class="store__label"><span class="store__small">Get it on</span><span class="store__big">Google Play</span></span>
+            </a>
+          </div>
+        </div>
+
+        <table class="compare">
+          <caption class="visually-hidden">Website compared with the app</caption>
+          <thead>
+            <tr><td></td><th scope="col">Website</th><th scope="col">App</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Daily mystery saint</th><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
+            <tr><th scope="row">Full saint collection</th><td><span aria-hidden="true">–</span><span class="visually-hidden">No</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
+            <tr><th scope="row">Daily league</th><td><span aria-hidden="true">–</span><span class="visually-hidden">No</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
+            <tr><th scope="row">Friends &amp; parish leagues</th><td><span aria-hidden="true">–</span><span class="visually-hidden">No</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
+            <tr><th scope="row">Streaks &amp; rewards</th><td>Basic</td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
+            <tr><th scope="row">Ads</th><td>Some</td><td>Can remove</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container container--narrow stack-18">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h2" id="faq-title">Good to know</h2>
+
+      <div class="faq">
+        <details class="card faq__item" open>
+          <summary>Is it free?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
+          <p class="body-text">Yes. The website is free with a few ads. The app is free too, with an optional purchase to remove ads.</p>
+        </details>
+        <details class="card faq__item" open>
+          <summary>Is it safe for children?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
+          <p class="body-text">Yes. There is no chat, no violence, and we block ads for gambling, dating and alcohol.</p>
+        </details>
+        <details class="card faq__item" open>
+          <summary>Does it work on my phone?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
+          <p class="body-text">Yes, on phones, tablets and computers. For the best experience, try fullscreen.</p>
+        </details>
+        <details class="card faq__item" open>
+          <summary>Can I put it on my parish website?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
+          <p class="body-text">Yes. Copy the free embed code and paste it into any page.</p>
+        </details>
+        <details class="card faq__item" open>
+          <summary>Is my progress saved?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
+          <p class="body-text">Your streak is saved in this browser. To keep everything across devices, use the app.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="assets/img/logo-dark.svg" alt="Saints Art Puzzle" width="139" height="46" loading="lazy">
+      <p>A calm art puzzle of the saints. A new mystery saint every day.</p>
+    </div>
+    <nav class="site-footer__links" aria-label="Footer">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms</a>
+      <a href="#">For parents</a>
+      <a href="#">Art of Devotion Games</a>
+    </nav>
+  </div>
+  <div class="site-footer__legal">
+    <div class="container">© <span data-year>2026</span> Art of Devotion Games. All artwork is original.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
