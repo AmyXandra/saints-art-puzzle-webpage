@@ -149,6 +149,45 @@
     if (e.key === 'Escape' && frame && frame.classList.contains('is-pseudo-fullscreen')) exitFullscreen();
   });
 
+  /* When the frame changes size (entering/leaving fullscreen), make sure the game
+     re-measures. Some games read the size once, or read it mid-transition on phones
+     and keep a stale canvas. Nudging the iframe's width by 1px after the layout
+     settles fires a fresh resize event inside it with the final size. */
+  var resizeTimers = [];
+  function refreshGameSize() {
+    if (!iframe) return;
+    resizeTimers.forEach(clearTimeout);
+    resizeTimers = [50, 300, 700].map(function (ms) {
+      return setTimeout(function () {
+        if (!iframe) return;
+        iframe.style.width = 'calc(100% - 1px)';
+        requestAnimationFrame(function () {
+          if (!iframe) return;
+          iframe.style.width = '';
+          postToGame({ type: 'sap:resize', fullscreen: isFullscreen() });
+        });
+      }, ms);
+    });
+  }
+  function isFullscreen() {
+    return !!fsElement() || (frame && frame.classList.contains('is-pseudo-fullscreen'));
+  }
+  if (frame) {
+    document.addEventListener('fullscreenchange', refreshGameSize);
+    document.addEventListener('webkitfullscreenchange', refreshGameSize);
+    window.addEventListener('orientationchange', refreshGameSize);
+    if ('ResizeObserver' in window) {
+      var lastW = 0, lastH = 0;
+      new ResizeObserver(function () {
+        var w = frame.clientWidth, h = frame.clientHeight;
+        if (Math.abs(w - lastW) > 2 || Math.abs(h - lastH) > 2) {
+          lastW = w; lastH = h;
+          refreshGameSize();
+        }
+      }).observe(frame);
+    }
+  }
+
   function toggleSound(btn) {
     soundOn = !soundOn;
     btn.setAttribute('aria-pressed', String(soundOn));

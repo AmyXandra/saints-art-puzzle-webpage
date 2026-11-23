@@ -977,6 +977,16 @@ body.has-pseudo-fullscreen { overflow: hidden; }
   /* Game frame: portrait start screen */
   .game__frame { width: min(360px, 100%); height: 470px; aspect-ratio: auto; }
 
+  /* The game's hint button sits top-right on phones, so the exit button
+     moves to the top-left and gets smaller there. */
+  .game__exit {
+    right: auto;
+    left: calc(10px + env(safe-area-inset-left, 0px));
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    width: 36px; height: 36px;
+  }
+  .game__exit .icon { width: 18px; height: 18px; }
+
   .launcher {
     inset: 0; width: auto; height: auto;
     transform: none;
