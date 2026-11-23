@@ -192,7 +192,7 @@
   /* ---------- Google AdSense ----------
      Publisher ID: <meta name="google-adsense-account"> in index.html.
      Ad unit IDs:  data-adsense-slot on each .ad placeholder.
-     A placeholder stays as-is until both are filled in. */
+     The striped placeholder shows until AdSense fills the slot (it stays if no ad is served). */
   (function initAds() {
     var meta = $('meta[name="google-adsense-account"]');
     var client = meta && meta.getAttribute('content').trim();
@@ -216,9 +216,21 @@
       ins.setAttribute('data-ad-slot', slot);
       ins.setAttribute('data-ad-format', 'auto');
       ins.setAttribute('data-full-width-responsive', 'true');
-      box.classList.add('is-live');
+      // Keep the striped "ADVERTISEMENT" placeholder until AdSense reports a filled ad.
+      var label = document.createElement('span');
+      label.className = 'ad__label';
+      label.setAttribute('aria-hidden', 'true');
+      label.textContent = box.textContent.trim() || 'ADVERTISEMENT';
       box.removeAttribute('aria-hidden');
-      box.replaceChildren(ins);
+      box.replaceChildren(label, ins);
+
+      var markFilled = function () {
+        box.classList.toggle('is-filled', ins.getAttribute('data-ad-status') === 'filled');
+      };
+      if ('MutationObserver' in window) {
+        new MutationObserver(markFilled).observe(ins, { attributes: true, attributeFilter: ['data-ad-status'] });
+      }
+
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     });
   })();
@@ -240,6 +252,25 @@
     Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
   })();
 
+  /* ---------- FAQ: copy embed code ---------- */
+  function copyEmbed() {
+    var code = $('#embed-code');
+    if (!code) return;
+    var text = code.textContent.trim();
+    var fallback = function () {
+      var r = document.createRange();
+      r.selectNodeContents(code);
+      var sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(r);
+      toast('Press Ctrl+C / ⌘C to copy');
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { toast('Embed code copied'); }, fallback);
+    } else {
+      fallback();
+    }
+  }
+
   /* ---------- Actions ---------- */
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-action]');
@@ -253,6 +284,7 @@
       case 'share': share(); break;
       case 'play-video': playVideo(btn); break;
       case 'print': window.print(); break;
+      case 'copy-embed': copyEmbed(); break;
     }
   });
 })();
