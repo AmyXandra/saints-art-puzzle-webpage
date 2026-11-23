@@ -216,6 +216,9 @@
       ins.setAttribute('data-ad-slot', slot);
       ins.setAttribute('data-ad-format', 'auto');
       ins.setAttribute('data-full-width-responsive', 'true');
+      // Family site: ask Google for child (age-restricted) treatment on every ad request (1 = child, 2 = teen).
+      // https://support.google.com/adsense/answer/3248194
+      ins.setAttribute('data-tag-for-age-treatment', '1');
       // Keep the striped "ADVERTISEMENT" placeholder until AdSense reports a filled ad.
       var label = document.createElement('span');
       label.className = 'ad__label';
