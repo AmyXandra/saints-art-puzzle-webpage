@@ -240,6 +240,11 @@ a { color: inherit; }
   color: var(--ad-text);
 }
 
+/* Real ad loaded: drop the placeholder look; the ad fills the slot's size. */
+/* Real ad loaded: drop the placeholder look and let the responsive ad set its own height. */
+.ad.is-live { height: auto; border: 0; background: none; border-radius: 0; display: block; }
+.ad .adsbygoogle { display: block; width: 100%; }
+
 .ad-wrap { padding: 40px var(--gutter) 0; }
 
 /* ---------- Hero ---------- */
@@ -302,30 +307,44 @@ a { color: inherit; }
   color: var(--text-muted);
 }
 
-/* Fullscreen: native API, or a fixed overlay where it isn't available (iPhone). */
-.game__frame:fullscreen,
+/* Fullscreen: native API, or a fixed overlay where it isn't available (iPhone).
+   Keep these as separate rules: a browser that doesn't know one selector in a
+   list (iPhone Safari and :fullscreen) ignores the whole rule. */
 .game__frame.is-pseudo-fullscreen {
+  position: fixed; inset: 0; z-index: 1000;
+  width: 100%; max-width: none;
+  height: 100vh; height: 100dvh;
+  margin: 0;
+  aspect-ratio: auto;
+  border: 0; border-radius: 0; box-shadow: none;
+}
+.game__frame:fullscreen {
   width: 100%; height: 100%;
   aspect-ratio: auto;
   border: 0; border-radius: 0; box-shadow: none;
 }
-.game__frame.is-pseudo-fullscreen {
-  position: fixed; inset: 0; z-index: 1000;
-  height: 100vh; height: 100dvh;
+.game__frame:-webkit-full-screen {
+  width: 100%; height: 100%;
+  aspect-ratio: auto;
+  border: 0; border-radius: 0; box-shadow: none;
 }
 
 .game__exit {
   display: none;
-  position: absolute; top: 12px; right: 12px; z-index: 2;
+  position: absolute; z-index: 2;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
   width: 44px; height: 44px; border-radius: 999px;
   align-items: center; justify-content: center;
   background: var(--white); border: 2px solid var(--line);
   color: var(--brown); cursor: pointer;
   box-shadow: 0 6px 14px rgba(107, 63, 28, 0.18);
 }
-.game__frame:fullscreen .game__exit,
 .game__frame.is-pseudo-fullscreen .game__exit { display: flex; }
+.game__frame:fullscreen .game__exit { display: flex; }
+.game__frame:-webkit-full-screen .game__exit { display: flex; }
 
+html.has-pseudo-fullscreen,
 body.has-pseudo-fullscreen { overflow: hidden; }
 
 /* Launcher (start screen). Desktop: drawn at 760x480 and scaled to fit the frame. */
@@ -717,6 +736,167 @@ body.has-pseudo-fullscreen { overflow: hidden; }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
 /* ==========================================================================
+   Legal pages (privacy.html)
+   ========================================================================== */
+
+.legal-hero {
+  padding: 56px var(--gutter) 40px;
+  background: linear-gradient(180deg, var(--band-bg), var(--bg));
+}
+.legal-hero__inner {
+  max-width: var(--content-max); margin: 0 auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.legal-hero__title {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 48px; line-height: 1.1;
+}
+.legal-hero__lede {
+  margin: 0; max-width: 860px;
+  font-weight: 500; font-size: 18px; line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.legal {
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 40px var(--gutter) 72px;
+  display: flex; gap: 56px; align-items: flex-start;
+}
+
+/* Table of contents */
+.toc {
+  flex: none; width: 260px;
+  position: sticky; top: 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.toc__title { padding: 0 12px 8px; }
+.toc__links { display: flex; flex-direction: column; gap: 4px; }
+.toc__links a {
+  display: flex; gap: 10px;
+  padding: 7px 12px; border-radius: 10px;
+  text-decoration: none;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+  color: var(--text-muted);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.toc__links a span { flex: none; width: 20px; }
+.toc__links a:hover { color: var(--tool-text); }
+.toc__links a.is-current { color: var(--tool-text); background: var(--chip-bg); }
+
+.btn--outline {
+  height: 46px; padding: 0 16px;
+  border-radius: 22px;
+  background: var(--white);
+  border: 2px solid #E2B04A; border-bottom: 5px solid #D2A052;
+  color: var(--tool-text);
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+}
+.btn--outline:hover { background: var(--row-alt-bg); }
+.btn--outline:active { transform: translateY(2px); }
+.toc__pdf { margin-top: 14px; }
+
+/* Policy body */
+.policy {
+  flex: 1; min-width: 0; max-width: 760px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.policy__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; align-items: center;
+  min-height: 32px; padding: 4px 12px; border-radius: 999px;
+  background: var(--chip-bg);
+  font-family: var(--font-display); font-weight: 800; font-size: 14px;
+  color: var(--tool-text);
+}
+
+.summary {
+  padding: 18px 20px;
+  background: var(--white);
+  border: 2px solid var(--gold); border-bottom: 5px solid var(--gold-deep);
+  border-radius: 24px;
+  box-shadow: 0 8px 16px rgba(107, 63, 28, 0.07);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.summary__title { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 18px; }
+.summary__list {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+}
+.summary__list li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-weight: 500; font-size: 15px; line-height: 1.55;
+  color: #4A3324;
+}
+.summary__list .icon { stroke: #3E7A1E; stroke-width: 2.8; margin-top: 1px; }
+
+.policy__section {
+  display: flex; flex-direction: column; gap: 12px;
+  padding-top: 26px; border-top: 2px solid var(--line);
+  scroll-margin-top: 20px;
+}
+.policy__section:first-of-type { padding-top: 6px; border-top: 0; }
+.policy__section h2 {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 800; font-size: 26px; line-height: 1.2;
+}
+.policy__section h2 span { color: #C8902F; margin-right: 10px; }
+.policy__section h3 {
+  margin: 8px 0 0;
+  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+}
+.policy__section p,
+.policy__section li {
+  margin: 0;
+  font-weight: 500; font-size: 17px; line-height: 1.55;
+  color: #4A3324;
+}
+.policy__section ul {
+  margin: 0; padding-left: 22px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.policy__section a { color: var(--brown); text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+.site-footer__links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1023px) {
+  .legal { flex-direction: column; gap: 28px; padding-top: 28px; }
+  .toc {
+    position: static; width: 100%;
+    padding: 16px; border-radius: 20px;
+    background: var(--white); border: 2px solid var(--line);
+  }
+  .toc__links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .toc__pdf { align-self: flex-start; }
+  .policy { max-width: none; }
+}
+
+@media (max-width: 720px) {
+  .legal-hero { padding: 32px var(--gutter) 24px; }
+  .legal-hero__title { font-size: 34px; }
+  .legal-hero__lede { font-size: 16px; }
+  .legal { padding-bottom: 48px; }
+  .toc__links { grid-template-columns: minmax(0, 1fr); }
+  .toc__pdf { align-self: stretch; }
+  .summary__list { grid-template-columns: minmax(0, 1fr); }
+  .policy__section h2 { font-size: 22px; }
+  .policy__section p, .policy__section li { font-size: 16px; }
+}
+
+/* Print / "Download as PDF": just the policy. */
+@media print {
+  .site-header, .site-footer, .toc, .skip-link, .toast { display: none !important; }
+  body { background: #fff; }
+  .legal-hero { background: none; padding: 0 0 16px; }
+  .legal { display: block; padding: 0; }
+  .policy { max-width: none; }
+  .summary { box-shadow: none; }
+  .policy__section { break-inside: avoid-page; }
+  .policy__section a { color: inherit; }
+}
+
+/* ==========================================================================
    Tablet (<= 1023px): keep the desktop structure, but let wide rows wrap.
    ========================================================================== */
 
@@ -754,7 +934,6 @@ body.has-pseudo-fullscreen { overflow: hidden; }
 
   /* Ads */
   .ad { width: 100%; }
-  .ad--hero-top { height: 64px; }
   .ad--hero-bottom { height: 104px; }
   .ad--mid { height: 254px; }
   .ad-wrap { padding-top: 24px; }

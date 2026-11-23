@@ -120,15 +120,21 @@
 
   function enterFullscreen() {
     startGame();
-    if (reqFs) {
+    if (!reqFs) { pseudoFullscreenOn(); return; }
+    try {
       var p = reqFs.call(frame);
       if (p && p.catch) p.catch(pseudoFullscreenOn);
-    } else {
+    } catch (e) {
       pseudoFullscreenOn();
+      return;
     }
+    // Some phones have the fullscreen function but quietly do nothing.
+    setTimeout(function () { if (!fsElement()) pseudoFullscreenOn(); }, 400);
   }
   function pseudoFullscreenOn() {
+    if (fsElement()) return;
     frame.classList.add('is-pseudo-fullscreen');
+    document.documentElement.classList.add('has-pseudo-fullscreen');
     document.body.classList.add('has-pseudo-fullscreen');
   }
   function exitFullscreen() {
@@ -136,6 +142,7 @@
       (document.exitFullscreen || document.webkitExitFullscreen).call(document);
     }
     frame.classList.remove('is-pseudo-fullscreen');
+    document.documentElement.classList.remove('has-pseudo-fullscreen');
     document.body.classList.remove('has-pseudo-fullscreen');
   }
   document.addEventListener('keydown', function (e) {
@@ -182,6 +189,57 @@
     box.replaceChildren(f);
   }
 
+  /* ---------- Google AdSense ----------
+     Publisher ID: <meta name="google-adsense-account"> in index.html.
+     Ad unit IDs:  data-adsense-slot on each .ad placeholder.
+     A placeholder stays as-is until both are filled in. */
+  (function initAds() {
+    var meta = $('meta[name="google-adsense-account"]');
+    var client = meta && meta.getAttribute('content').trim();
+    if (!client) return;
+
+    // The AdSense script tag is in <head>; only add it if a page leaves it out.
+    if (!document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(client);
+      document.head.appendChild(s);
+    }
+
+    document.querySelectorAll('[data-adsense-slot]').forEach(function (box) {
+      var slot = box.getAttribute('data-adsense-slot').trim();
+      if (!slot) return;
+      var ins = document.createElement('ins');
+      ins.className = 'adsbygoogle';
+      ins.setAttribute('data-ad-client', client);
+      ins.setAttribute('data-ad-slot', slot);
+      ins.setAttribute('data-ad-format', 'auto');
+      ins.setAttribute('data-full-width-responsive', 'true');
+      box.classList.add('is-live');
+      box.removeAttribute('aria-hidden');
+      box.replaceChildren(ins);
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    });
+  })();
+
+  /* ---------- Legal page: highlight the current section in the contents ---------- */
+  (function initToc() {
+    var links = document.querySelectorAll('.toc__links a');
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var visible = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting; });
+      var current = null;
+      links.forEach(function (a) { var id = a.getAttribute('href').slice(1); if (!current && visible[id]) current = id; });
+      if (!current) return;
+      links.forEach(function (a) { a.classList.toggle('is-current', a === byId[current]); });
+    }, { rootMargin: '-10% 0px -60% 0px' });
+    Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  })();
+
   /* ---------- Actions ---------- */
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-action]');
@@ -194,6 +252,7 @@
       case 'sound': toggleSound(btn); break;
       case 'share': share(); break;
       case 'play-video': playVideo(btn); break;
+      case 'print': window.print(); break;
     }
   });
 })();

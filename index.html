@@ -8,6 +8,11 @@
   <meta name="theme-color" content="#FFF9F0">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
+  <!-- Google AdSense. Ad units are filled in by js/main.js (data-adsense-slot on each .ad). -->
+  <meta name="google-adsense-account" content="ca-pub-1717848471250551">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1717848471250551"
+       crossorigin="anonymous"></script>
+  
   <meta property="og:type" content="website">
   <meta property="og:title" content="Saints Art Puzzle">
   <meta property="og:description" content="Solve the art puzzle to reveal today's saint, then read their story and a prayer.">
@@ -68,8 +73,6 @@
 <main>
   <!-- ============ HERO / GAME ============ -->
   <div class="hero" id="play">
-    <div class="ad ad--hero-top" data-ad-slot="hero-top" aria-hidden="true">ADVERTISEMENT</div>
-
     <div class="hero__intro">
       <p class="eyebrow">PLAY FREE · NEW MYSTERY SAINT EVERY DAY</p>
       <h1 class="hero__title">Saints Art Puzzle</h1>
@@ -147,7 +150,7 @@
       </div>
     </div>
 
-    <div class="ad ad--hero-bottom" data-ad-slot="hero-bottom" aria-hidden="true">ADVERTISEMENT</div>
+    <div class="ad ad--hero-bottom" data-ad-slot="hero-bottom" data-adsense-slot="4290111015" aria-hidden="true">ADVERTISEMENT</div>
   </div>
 
   <!-- ============ HOW TO PLAY ============ -->
@@ -259,7 +262,7 @@
   </section>
 
   <div class="ad-wrap">
-    <div class="ad ad--mid" data-ad-slot="mid" aria-hidden="true">ADVERTISEMENT</div>
+    <div class="ad ad--mid" data-ad-slot="mid" data-adsense-slot="8030045473" aria-hidden="true">ADVERTISEMENT</div>
   </div>
 
   <!-- ============ GET THE APP ============ -->
@@ -293,7 +296,7 @@
             <tr><th scope="row">Daily league</th><td><span aria-hidden="true">–</span><span class="visually-hidden">No</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
             <tr><th scope="row">Friends &amp; parish leagues</th><td><span aria-hidden="true">–</span><span class="visually-hidden">No</span></td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
             <tr><th scope="row">Streaks &amp; rewards</th><td>Basic</td><td><span aria-hidden="true">✓</span><span class="visually-hidden">Yes</span></td></tr>
-            <tr><th scope="row">Ads</th><td>Some</td><td>Can remove</td></tr>
+            <tr><th scope="row">Ads</th><td>Some</td><td>Some</td></tr>
           </tbody>
         </table>
       </div>
@@ -309,7 +312,7 @@
       <div class="faq">
         <details class="card faq__item" open>
           <summary>Is it free?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
-          <p class="body-text">Yes. The website is free with a few ads. The app is free too, with an optional purchase to remove ads.</p>
+          <p class="body-text">Yes. The website and the app are both free, with a few ads.</p>
         </details>
         <details class="card faq__item" open>
           <summary>Is it safe for children?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
@@ -325,7 +328,7 @@
         </details>
         <details class="card faq__item" open>
           <summary>Is my progress saved?<svg class="icon icon--b26" width="22" height="22"><use href="#i-chevron"/></svg></summary>
-          <p class="body-text">Your streak is saved in this browser. To keep everything across devices, use the app.</p>
+          <p class="body-text">Your streak is saved in this browser, and the app saves your progress on your phone. Saving across devices is coming soon.</p>
         </details>
       </div>
     </div>
@@ -340,11 +343,9 @@
     </div>
     <nav class="site-footer__links" aria-label="Footer">
       <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy policy</a>
-      <a href="#">Terms</a>
+      <a href="privacy.html">Privacy policy</a>
       <a href="#">For parents</a>
-      <a href="#">Art of Devotion Games</a>
+      <a href="https://www.artofdevotiongames.com/" target="_blank" rel="noopener">Art of Devotion Games</a>
     </nav>
   </div>
   <div class="site-footer__legal">

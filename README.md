@@ -4,6 +4,7 @@ Static landing page for Saints Art Puzzle: plain HTML, CSS and JS, no build step
 
 ```
 index.html        page markup (one responsive page for desktop + phone)
+privacy.html      privacy policy
 css/styles.css    styles; design tokens at the top, tablet/phone overrides at the bottom
 js/main.js        menu, game iframe, fullscreen/sound/share, video, dates
 assets/img/       images and logos
@@ -20,7 +21,7 @@ Preview: open `index.html` in a browser, or run `python3 -m http.server` and vis
 | YouTube video | `data-youtube-id` on `.video` in `index.html` |
 | App Store / Google Play links | `.store` links in the "Get the app" section |
 | Footer links | About, Contact, Privacy policy, Terms, For parents |
-| Ads | Elements with `data-ad-slot` (`hero-top`, `hero-bottom`, `mid`). Replace each placeholder's content with the ad tag. |
+| Ads (Google AdSense) | Publisher ID in `<meta name="google-adsense-account">` in `index.html`; each ad unit's ID in `data-adsense-slot` on the `.ad` placeholders (`hero-bottom` and `mid`). `ads.txt` is at the site root. |
 
 ## Game ↔ page messages
 
